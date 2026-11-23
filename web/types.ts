@@ -1,0 +1,56 @@
+export const judges = ['AtCoder','Codeforces','CSES','Timus','USACO','QOJ','Other'] as const;
+export type Judge = typeof judges[number];
+export const groups = {atcoder:'AtCoder grind',upsolve:'Codeforces upsolve',rounds:'Codeforces round practice',grind:'Codeforces grind',cses:'CSES weighted sections',timus:'Timus practice',guide:'USACO Guide',manual:'Manual lists'} as const;
+export type Group = keyof typeof groups;
+export type PracticeSource = 'atcoder'|'codeforces'|'cses'|'timus'|'guide'|'manual';
+export type AccountJudge='AtCoder'|'Codeforces';
+export type ConnectionJudge=AccountJudge|'Timus';
+export type RatingSource='official'|'training';
+export type VirtualSelection={mode:'all'|'selected';ids:string[]};
+export type Series = {name:'ABC'|'ARC'|'AGC';enabled:boolean;share:number;ratingSource:RatingSource;offset:number;band:number;fixed:number|null;since:string};
+export type Upsolve = {id:string;division:number;cutoff:string;enabled:boolean;virtual:boolean;skipped:boolean;archive?:boolean;allRounds?:boolean;order?:'earliest'|'hardest'};
+export type TimusRule = {id:string; name:string; enabled:boolean; categories:string[]; min:number|null; max:number|null;
+  progress:'unsolved'|'unattempted'|'attempted'; order:'easiest'|'hardest'; cap:number};
+export type Settings = { handles:Record<ConnectionJudge,string>; trainingRatings:Record<AccountJudge,number|null>; virtualSelection:Record<AccountJudge,VirtualSelection>; colors:Record<Judge,string>; zone:string;
+  queueMode:'automatic'|'custom'; shares:Record<Group,number>; sourceShares?:Record<PracticeSource,number>; atcoder:{english:boolean;experimental:boolean;series:Series[]}; upsolve:Upsolve[]; upsolveCap:number;
+  upsolveMinRating:number|null; upsolveMaxRating:number|null;
+  grind:{enabled:boolean;ratingSource:'fixed'|RatingSource;intervals:[number,number][];offsets:[number,number][];since:string};cses:{enabled:boolean;weights:Record<string,number>}; timusRules:TimusRule[] };
+export type Solve={day:string|null; source:'manual'|'synced';stamp?:number};
+export type UsacoDivision = 'Bronze'|'Silver'|'Gold'|'Platinum';
+export type Problem={key:string;title:string;url:string;judge:Judge;contest?:string;index?:string;difficulty?:number;solvers?:number;usacoDivision?:UsacoDivision;section?:string;gym?:boolean;solve?:Solve|null;pendingAtCoder?:boolean};
+export type Ranked = Problem & {rank:number;reason:string;targetDelta?:number;rules:string[];guideEntries?:Pick<GuideMatch['entries'][number],'moduleId'|'moduleTitle'|'difficulty'>[]};
+export type GuideCriteria = {divisions:string[];difficulties:string[];topics:string[];modules:string[];judges:string[]};
+export type GuideModule = {id:string;title:string;section:string;topic:string;url:string;listings:{id:string;difficulty:string;tags:string[]}[]};
+export type GuideCatalog = {version:number;revision:string;source:string;modules:GuideModule[];problems:Record<string,Problem>};
+export type GuideMatch = {problem:Problem;entries:{moduleId:string;moduleTitle:string;division:string;difficulty:string;section:string;topic:string;order:number}[]};
+export type GuideData = {catalog:GuideCatalog;moduleProgress:Record<string,string>};
+export type GuideRule = {id:string;name:string;criteria:GuideCriteria;sectionWeights:Record<string,number>|null;enabled:boolean;cap:number;done:number;total:number};
+export type ManualList = {id:string;name:string;keys:string[];enabled:boolean;cap:number;done:number;total:number;items:Problem[]};
+export type RuleOption={id:string;group:Group;name:string;count:number;pending:number;preview:Pick<Ranked,'key'|'title'|'difficulty'|'reason'|'targetDelta'>[]};
+export type CodeforcesRound={contestId:number;name:string;stamp:number};
+export type CodeforcesRatingPoint=CodeforcesRound & {training:number;delta:number;rank:number} & (
+  {kind:'official';rating:number} | {kind:'virtual';score:number;tied:number;fieldSize:number;originalFieldSize:number}
+);
+export type CodeforcesVirtualHistory={points:CodeforcesRatingPoint[];eligible:CodeforcesRound[];skipped:(CodeforcesRound & {reason:string})[];rating:number|null;updatedAt:number};
+export type AtCoderVirtualEntry={id:string;contestId:string;name:string;start:number;end:number;status:'scheduled'|'completed'|'cancelled';
+  source:'timed'|'import';counts:boolean;alreadyRated:boolean;performance?:number;method?:string;points?:number;penalties?:number;training:number|null;delta:number|null;
+  scoreKey?:string;notice?:string};
+export type AtCoderVirtualHistory={entries:AtCoderVirtualEntry[];rating:number|null;hasOfficialHistory:boolean;
+  points:({stamp:number;training:number} & ({kind:'official';rating:number}|{kind:'virtual'}))[]};
+export type VirtualImportStatus={running:boolean;completed?:number;total?:number;error?:string};
+export type Sync={lastSuccess?:number;error?:string;rating?:number|null;ratingNotice?:string;authorName?:string;catalogAt?:number;historyAt?:number;backfill?:number|null;virtual?:CodeforcesVirtualHistory};
+export type Verification = {status:'unverified'} | {status:'expired';handle:string} | {status:'verified';handle:string;verifiedAt:number}
+  | ({status:'pending';handle:string;challengeId:string;expiresAt:number} & ({code:string} | {problem:{contest:number;task:string}}));
+export type Stats = {timeline:(Problem & Solve & {series?:Series['name']})[];heatStart:string;volume:{label:string;total:number;split:Record<Judge,number>;active:number;average:number}[];
+  trainingFocus:{judge:Judge;label:string;intervals:[number,number][];done:number;total:number}[];
+  atcoderDifficulty:Record<string,Record<Series['name'],number>>;grindMatches:number;
+  upsolves:{rule:string;contest:string;name:string;division:number;cutoff:string;total:number;done:number}[] };
+export type State = {settings:Settings;sync:Record<string,Sync>;atcoderVirtual:AtCoderVirtualHistory|null;verifications:Record<ConnectionJudge,Verification>;today:string;queue:Ranked[];pendingAtCoder:Problem[];actual:Record<string,number>;nextQueue:{key:string;title:string;lane:string}[];ruleOptions:RuleOption[];
+  ruleRows:Record<string,Ranked[]>;engine:string;engineError?:string;listProgress:ManualList[];guideRules:GuideRule[];inProgress:(Problem & Pick<Ranked,'guideEntries'>)[];
+  csesProgress:{name:string;done:number;total:number}[]; csesTopSolvers:number; timusCount:number;
+  cses:{key:string;title:string;section:string;day?:string;solved:boolean}[]; stats:Stats };
+export const trainingRatingValue = (state:State,judge:AccountJudge) =>
+  (judge==='Codeforces' ? state.sync.Codeforces?.virtual?.rating : state.atcoderVirtual?.rating) ?? state.settings.trainingRatings[judge];
+export type ImportFile = {version:number;source:string;solves:{id:string;day?:string|null}[]};
+export type ImportRow = {id:string;day:string|null;problem:Problem;previous:boolean};
+export type LinkRow = {input:string;problem?:Problem;error?:string};

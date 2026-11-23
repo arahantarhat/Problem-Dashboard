@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: unified-training
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run engine:setup && npm run build:web
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false

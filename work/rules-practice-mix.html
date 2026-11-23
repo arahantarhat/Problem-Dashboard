@@ -1,0 +1,111 @@
+<div class="viz-dotted-background" id="rules-practice-mix">
+  <section class="mix-window" aria-labelledby="rules-mix-title">
+    <header class="mix-header">
+      <div>
+        <h2 id="rules-mix-title">Practice mix</h2>
+        <p>Local profile</p>
+      </div>
+      <span class="mix-mode">Custom</span>
+    </header>
+    <div class="mix-bars">
+      <div class="mix-bar-row">
+        <span>Target split</span>
+        <div class="mix-track" role="img" aria-label="Target split: 80% AtCoder, 20% Codeforces">
+          <span class="mix-atcoder"></span><span class="mix-codeforces"></span>
+        </div>
+      </div>
+      <div class="mix-bar-row">
+        <span>Next 20 problems</span>
+        <div class="mix-track mix-queue" role="img" aria-label="Queue preview: 16 AtCoder problems, 4 Codeforces problems">
+          <span class="mix-atcoder"></span><span class="mix-codeforces"></span>
+        </div>
+      </div>
+    </div>
+    <div class="mix-sources">
+      <div class="mix-columns" aria-hidden="true">
+        <span>Source</span><span>Target</span><span>In preview</span><span></span>
+      </div>
+      <details class="mix-source" open>
+        <summary class="mix-columns">
+          <span class="mix-name"><i class="mix-atcoder" aria-hidden="true"></i>AtCoder</span>
+          <span aria-label="80 percent target">80%</span><span aria-label="16 problems in preview">16</span><span class="mix-arrow" aria-hidden="true">›</span>
+        </summary>
+        <ul>
+          <li class="mix-columns"><span>ABC grind</span><span></span><span aria-label="13 problems in preview">13</span></li>
+          <li class="mix-columns"><span>ARC grind</span><span></span><span aria-label="3 problems in preview">3</span></li>
+        </ul>
+      </details>
+      <details class="mix-source">
+        <summary class="mix-columns">
+          <span class="mix-name"><i class="mix-codeforces" aria-hidden="true"></i>Codeforces</span>
+          <span aria-label="20 percent target">20%</span><span aria-label="4 problems in preview">4</span><span class="mix-arrow" aria-hidden="true">›</span>
+        </summary>
+        <ul>
+          <li class="mix-columns"><span>Div. 2 upsolve</span><span></span><span aria-label="3 problems in preview">3</span></li>
+          <li class="mix-columns"><span>Div. 4 upsolve</span><span></span><span aria-label="1 problem in preview">1</span></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+</div>
+<style>
+#rules-practice-mix {
+  color-scheme: light dark;
+  --mix-paper: light-dark(#fff, #1a2232);
+  --mix-ink: light-dark(#171c29, #edf1f8);
+  --mix-muted: light-dark(#586478, #aebbd1);
+  --mix-line: light-dark(#e1e6ee, #39465b);
+  --mix-wash: light-dark(#f7f9fc, #222d40);
+  --mix-blue: light-dark(#2c4fc8, #809dff);
+  --mix-teal: light-dark(#007b70, #5bc8b0);
+  --mix-pill: light-dark(#edf2ff, #2c3c64);
+  color: var(--mix-ink);
+  font: 14px/1.45 Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  padding: clamp(8px, 3vw, 22px);
+}
+#rules-practice-mix .mix-window {
+  background: var(--mix-paper);
+  border: 1px solid var(--mix-line);
+  border-radius: 12px;
+  padding: clamp(13px, 3vw, 22px);
+}
+#rules-practice-mix .mix-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+#rules-practice-mix h2 { font-size: 20px; font-weight: 650; margin: 0; }
+#rules-practice-mix p { color: var(--mix-muted); margin: 2px 0 0; }
+#rules-practice-mix .mix-mode { background: var(--mix-pill); border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 600; }
+#rules-practice-mix .mix-bars { display: grid; gap: 12px; margin: 19px 0; }
+#rules-practice-mix .mix-bar-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); align-items: center; gap: 10px; }
+#rules-practice-mix .mix-track { display: flex; gap: 2px; height: 15px; overflow: hidden; border-radius: 4px; }
+#rules-practice-mix .mix-atcoder { background: var(--mix-blue); }
+#rules-practice-mix .mix-codeforces { background: var(--mix-teal); }
+#rules-practice-mix .mix-track .mix-atcoder { flex: 4; }
+#rules-practice-mix .mix-track .mix-codeforces { flex: 1; }
+#rules-practice-mix .mix-queue span { position: relative; }
+#rules-practice-mix .mix-queue span::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent calc(100% - 1px), var(--mix-paper) 0) 0 0 / var(--mix-cell) 100%;
+  opacity: .65;
+}
+#rules-practice-mix .mix-queue .mix-atcoder { --mix-cell: 6.25%; }
+#rules-practice-mix .mix-queue .mix-codeforces { --mix-cell: 25%; }
+#rules-practice-mix .mix-columns {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(48px, 15%) minmax(64px, 18%) 12px;
+  align-items: center; gap: 6px; padding: 8px; font-variant-numeric: tabular-nums;
+}
+#rules-practice-mix .mix-columns > :nth-child(2),
+#rules-practice-mix .mix-columns > :nth-child(3) { text-align: right; }
+#rules-practice-mix .mix-sources > .mix-columns { color: var(--mix-muted); font-size: 12px; }
+#rules-practice-mix .mix-source { border-top: 1px solid var(--mix-line); }
+#rules-practice-mix summary { list-style: none; min-height: 28px; }
+#rules-practice-mix summary::-webkit-details-marker { display: none; }
+#rules-practice-mix summary:hover { background: var(--mix-wash); }
+#rules-practice-mix .mix-name { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+#rules-practice-mix .mix-name i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+#rules-practice-mix .mix-arrow { color: var(--mix-muted); text-align: center; font-size: 17px; }
+#rules-practice-mix [open] .mix-arrow { transform: rotate(90deg); }
+#rules-practice-mix ul { list-style: none; margin: 0 0 4px; padding: 0; background: var(--mix-wash); border-radius: 6px; }
+#rules-practice-mix li > :first-child { padding-left: 17px; }
+@media (max-width: 430px) {
+  #rules-practice-mix .mix-bar-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+</style>

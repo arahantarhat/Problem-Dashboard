@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "Unified Training · CSES export",
+  "version": "0.1.0",
+  "description": "Export solved task IDs from the active CSES problemset tab.",
+  "permissions": ["activeTab", "scripting"],
+  "action": { "default_title": "Export CSES solves", "default_popup": "popup.html" }
+}

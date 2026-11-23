@@ -1,0 +1,11 @@
+node_modules/
+web/dist/
+data/
+.engine/
+
+desktop/*.app/
+desktop/.build-*/
+
+.env.local
+/supabase/.temp/
+/supabase/.branches/

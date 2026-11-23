@@ -1,0 +1,36 @@
+{
+  "name": "unified-training",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.14"
+  },
+  "scripts": {
+    "build": "npm run engine:build && npm run build:web && node desktop/build.mjs",
+    "start": "node server/index.mjs",
+    "dev": "vite web --host 127.0.0.1",
+    "test": "node --test test/*.test.mjs",
+    "check": "tsc --noEmit",
+    "engine:setup": "sh engine/setup.sh",
+    "engine:build": "node engine/build.mjs",
+    "build:web": "vite build web",
+    "desktop:build": "npm run build",
+    "guide:refresh": "node scripts/refresh-guide.mjs",
+    "db:migrate": "node scripts/migrate-db.mjs",
+    "db:import": "node scripts/import-sqlite.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.2",
+    "lucide-react": "0.525.0",
+    "pg": "^8.23.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "vite": "6.4.2"
+  }
+}

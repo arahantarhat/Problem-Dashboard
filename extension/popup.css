@@ -1,0 +1,2 @@
+body{width:275px;margin:0;padding:17px;color:#171c29;font:14px/1.5 system-ui,sans-serif}
+h1{font-size:18px;margin:0}p{margin:8px 0 12px;color:#586478}button{background:#2c4fc8;color:white;border:0;border-radius:6px;padding:8px 11px;font:inherit;cursor:pointer}button:focus-visible{outline:2px solid #2c4fc8;outline-offset:2px}button:disabled{opacity:.6}
